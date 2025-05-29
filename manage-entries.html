@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Work Entries</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" style="text-decoration: none;"><h1 class="nav-title">
+        Garment Payroll<br>
+        System</h1></a>
+      <ul class="nav-links">
+        <li><a href="add-worker.html">Add Workers</a></li>
+        <li><a href="work-entry.html">Submit Work</a></li>
+        <li><a href="manage-entries.html">Manage Entries</a></li>
+        <li><a href="salary-report.html">Salary Report</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Manage Work Entries</h1>
+    <table id="entryTable" aria-label="Work entries table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Worker</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="entryTableBody">
+        <tr class="no-data">
+          <td colspan="4">No work entries available.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button id="backToTop" title="Back to Top" style="display: none; position: fixed; bottom: 20px; right: 20px;">&uarr;</button>
+
+  <script src="js/storage.js"></script>
+  <script src="js/manageEntries.js"></script>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

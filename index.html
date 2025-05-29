@@ -1,0 +1,112 @@
+<!--Index.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Garment Payroll System</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="index.html" class="nav-title-link">
+        <h1 class="nav-title">Garment Payroll<br>System</h1>
+      </a>
+      <ul class="nav-links">
+        <li><a href="add-worker.html">Add Workers</a></li>
+        <li><a href="work-entry.html">Submit Work</a></li>
+        <li><a href="manage-entries.html">Manage Entries</a></li>
+        <li><a href="salary-report.html">Salary Report</a></li>
+      </ul>
+      <button id="logoutBtn" class="btn-logout" aria-label="Logout">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="mainContent" class="container dashboard" role="main">
+
+    <!-- Greeting -->
+    <section>
+      <div id="greeting" class="greeting"></div>
+    </section>
+
+    <!-- Dashboard Cards -->
+    <section class="dashboard-grid">
+      <a href="add-worker.html" class="card">
+        <h2>Add Workers</h2>
+        <p>Register new employees and define their pay structure.</p>
+      </a>
+      <a href="work-entry.html" class="card">
+        <h2>Submit Work</h2>
+        <p>Capture daily shift or unit-based work for each worker.</p>
+      </a>
+      <a href="salary-report.html" class="card">
+        <h2>Salary Report</h2>
+        <p>Access weekly/monthly salary summaries.</p>
+      </a>
+      <a href="manage-entries.html" class="card">
+        <h2>Manage Entries</h2>
+        <p>Review, update, or delete work records.</p>
+      </a>
+    </section>
+
+    <!-- Closing Summary -->
+    <section class="closing-summary">
+      <h2>Empower Your Payroll Process</h2>
+      <p>
+        Whether managing ten or a hundred workers, our system helps automate and streamline salary processes. Reduce errors, save time, and ensure accuracy.
+      </p>
+      <p class="cta-text">
+        Use the tools above to manage your factory operations effectively.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <p>&copy; <span id="current-year"></span> Garment Payroll System | Version 1.0.0</p>
+      <p>Contact: <a href="mailto:sreedharkp2006@gmail.com">support@garmentpayroll.com</a></p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" class="back-to-top" title="Back to Top" aria-label="Back to top">↑</button>
+
+  <!-- Year Script -->
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+
+  <!-- UX Enhancements -->
+  <script>
+    const backToTopBtn = document.getElementById("backToTop");
+
+    window.onscroll = () => {
+      backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    };
+
+    backToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      if (confirm("Are you sure you want to logout?")) {
+        localStorage.clear();
+        window.location.href = "login.html";
+      }
+    });
+
+    const greetingEl = document.getElementById("greeting");
+    const hour = new Date().getHours();
+    const greetingText = hour < 12 ? "Good Morning ☀️" :
+                         hour < 18 ? "Good Afternoon 🌤️" :
+                         "Good Evening 🌙";
+    greetingEl.textContent = `${greetingText}, Admin!`;
+  </script>
+
+</body>
+</html>

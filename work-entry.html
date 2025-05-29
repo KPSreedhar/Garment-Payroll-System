@@ -1,0 +1,51 @@
+<!-- work-entry.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work Entry</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body> 
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="index.html" style="text-decoration: none;"><h1 class="nav-title">
+        Garment Payroll<br>
+        System</h1></a>
+      <ul class="nav-links">
+        <li><a href="add-worker.html">Add Workers</a></li>
+        <li><a href="work-entry.html">Submit Work</a></li>
+        <li><a href="manage-entries.html">Manage Entries</a></li>
+        <li><a href="salary-report.html">Salary Report</a></li>
+        
+      </ul>
+      
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Enter Daily Work Data</h1>
+
+    <form id="entryForm">
+      <label for="date">Date:</label>
+      <input type="date" id="date" required />
+
+      <label for="worker">Select Worker:</label>
+      <select id="worker" placeholder="Select"><option value="">--Select--</option></select>
+
+      <label id="label-quantity" for="quantity">Quantity (shifts/pieces):</label>
+      <input type="number" id="quantity" min="1" required />
+<br><br>
+      <button type="submit">Save Entry</button>
+    </form>
+
+    <div id="message"></div>
+  </div>
+
+
+  <script src="js/storage.js"></script>
+  <script src="js/workEntries.js"></script>
+</body>
+</html>

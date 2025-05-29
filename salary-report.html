@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weekly Salary Report</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body> 
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="index.html" style="text-decoration: none;"><h1 class="nav-title">
+        Garment Payroll<br>
+        System</h1></a>
+      <ul class="nav-links">
+        <li><a href="add-worker.html">Add Workers</a></li>
+        <li><a href="work-entry.html">Submit Work</a></li>
+        <li><a href="manage-entries.html">Manage Entries</a></li>
+        <li><a href="salary-report.html">Salary Report</a></li>
+        
+      </ul>
+
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Weekly Salary Report</h1>
+
+    <label for="weekStart">Start Date:</label>
+    <input type="date" id="weekStart" />
+
+    <label for="weekEnd">End Date:</label>
+    <input type="date" id="weekEnd" />
+<br><br>
+    <button id="generateBtn">Generate Report</button>
+
+    <table id="reportTable">
+      <thead>
+        <tr>
+          <th>Worker Name</th>
+          <th>Type</th>
+          <th>Rate</th>
+          <th>Total Quantity</th>
+          <th>Total Salary</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+ 
+  <script src="js/storage.js"></script>
+  <script src="js/salaryReport.js"></script>
+</body>
+</html>

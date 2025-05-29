@@ -1,0 +1,208 @@
+<!--login.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body.auth-body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3eafc, #c8d0f2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: #0052cc;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: -150px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-title {
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .login-box {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      height: auto;
+      max-width: 400px;
+      width: 90%;
+      margin-top: 80px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      margin-top: -10px;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #3f51b5;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #3f51b5;
+      color: #fff;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #303f9f;
+    }
+
+    .forgot-link {
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .forgot-link a {
+      color: #5e35b1;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .forgot-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 30px 20px;
+      }
+
+      .nav-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="auth-body">
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <h1 class="nav-title">Garment Payroll<br>System</h1>
+    </div>
+  </nav>
+
+  <!-- Login Box -->
+  <div class="container login-box" role="main">
+    <h2>Admin Login</h2>
+
+    <form id="loginForm" aria-describedby="loginError" novalidate>
+      <label for="username">Email:</label>
+      <input type="email" id="username" name="username" autocomplete="email" required aria-required="true" />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required aria-required="true" />
+
+      <button type="submit">Login</button>
+
+      <br><br>
+    </form>
+  </div>
+  <script>
+  // Initialize admin credentials once (for demo purposes)
+  if (!localStorage.getItem("adminUser") || !localStorage.getItem("adminPass")) {
+    localStorage.setItem("adminUser", "sreedhar@gmail.com");
+    localStorage.setItem("adminPass", "kpns1234");
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value;
+
+    const storedUser = localStorage.getItem("adminUser");
+    const storedPass = localStorage.getItem("adminPass");
+
+    if (!storedUser || !storedPass) {
+      document.getElementById("loginError").textContent =
+        "Admin credentials not found. Please contact support.";
+      return;
+    }
+
+    if (user === storedUser && pass === storedPass) {
+      localStorage.setItem("isLoggedIn", "true");
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("loginError").textContent = "Invalid email or password.";
+    }
+  });
+
+  document.querySelector('.forgot-link a').addEventListener('click', function () {
+    console.log('Navigating to Reset Password page');
+  });
+</script>
+
+
+
+</body>
+</html>
