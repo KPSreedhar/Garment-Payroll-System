@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Garment Payroll System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+    }
+    
+    .nav-title {
+      color: white;
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-title i {
+      font-size: 1.8rem;
+    }
+    
+    .nav-title-link {
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-links a:hover {
+      color: white;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .btn-logout {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-logout:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: white;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      animation: fadeIn 1s ease;
+    }
+    
+    .hero-content {
+      flex: 1;
+    }
+    
+    .hero-image {
+      flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow-hover);
+      animation: slideInRight 1s ease;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Greeting */
+    .greeting {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeInUp 0.8s ease;
+    }
+    
+    .greeting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .greeting h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .current-datetime {
+      text-align: right;
+      color: var(--gray);
+    }
+    
+    .current-datetime .time {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    /* Stats */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .stat-item {
+      background: rgba(67, 97, 238, 0.05);
+      padding: 1.2rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-left: 4px solid var(--primary);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    
+    .stat-icon {
+      font-size: 1.8rem;
+      color: var(--primary);
+      width: 50px;
+      height: 50px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stat-value {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    /* Dashboard Cards */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.8rem;
+      text-decoration: none;
+      color: var(--dark);
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 200px;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .card p {
+      color: var(--gray);
+      margin: 0.8rem 0 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .card .btn {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(67, 97, 238, 0.1);
+    }
+    
+    /* Project Info Section */
+    .project-info {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 2rem;
+      animation: fadeIn 1s ease;
+    }
+    
+    .project-info h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .project-info-content {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .project-info-text {
+      flex: 1;
+    }
+    
+    .project-info-image {
+      flex: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow-hover);
+    }
+    
+    .project-info-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .feature-item {
+      background: rgba(67, 97, 238, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .feature-item h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      margin-bottom: 3rem;
+    }
+    
+    .testimonials h2 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .testimonial-card {
+      background: white;
+      padding: 1.8rem;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 4rem;
+      color: rgba(67, 97, 238, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .testimonial-content {
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .author-info h4 {
+      margin: 0;
+      color: var(--dark);
+    }
+    
+    .author-info p {
+      margin: 0;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0 2rem;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-logo i {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    
+    .footer-logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .footer-links h3 {
+      color: white;
+      margin-bottom: 1.2rem;
+      font-size: 1.2rem;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.6rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .footer-contact p {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px) scale(1.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      from { 
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .animate-delay-1 {
+      animation-delay: 0.2s;
+    }
+    
+    .animate-delay-2 {
+      animation-delay: 0.4s;
+    }
+    
+    .animate-delay-3 {
+      animation-delay: 0.6s;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero {
+        flex-direction: column;
+      }
+      
+      .project-info-content {
+        flex-direction: column;
+      }
+      
+      .hero-image, .project-info-image {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--primary);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        gap: 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      
+      .nav-links.active {
+        max-height: 500px;
+        padding: 1rem 0;
+      }
+      
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .nav-links a {
+        padding: 1rem;
+        justify-content: center;
+      }
+      
+      .btn-logout {
+        display: none;
+      }
+      
+      .mobile-logout {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .greeting-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .current-datetime {
+        text-align: left;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .stats-bar {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="home.html" class="nav-title-link">
+        <h1 class="nav-title"><i class="fas fa-tshirt"></i> Garment Payroll System</h1>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="add-worker.html"><i class="fas fa-user-plus"></i> Add Workers</a></li>
+        <li><a href="work-entry.html"><i class="fas fa-tasks"></i> Submit Work</a></li>
+        <li><a href="manage-entries.html"><i class="fas fa-edit"></i> Manage Entries</a></li>
+        <li><a href="salary-report.html"><i class="fas fa-file-invoice-dollar"></i> Salary Report</a></li>
+        <li class="mobile-logout">
+          <a href="index.html"><button class="btn-logout" id="mobileLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+        </li>
+      </ul>
+      
+     
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="mainContent" class="container dashboard" role="main">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="animate__animated animate__fadeIn">Streamline Your Garment Factory Payroll</h1>
+        <p class="animate__animated animate__fadeIn animate-delay-1">Efficient, accurate, and hassle-free payroll management system designed specifically for garment manufacturers.</p>
+        <div class="animate__animated animate__fadeIn animate-delay-2" style="margin-top: 2rem; display: flex; gap: 1rem;">
+          <a href="add-worker.html" class="btn btn-primary"><i class="fas fa-play"></i> Get Started</a>
+          <a href="#project-info" class="btn btn-outline"><i class="fas fa-info-circle"></i> Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/payroll.jpg" alt="Garment factory workers">
+      </div>
+    </section>
+
+    <!-- Greeting -->
+    <section class="greeting">
+      <div class="greeting-header">
+        <h1 id="greeting"><i class="fas fa-user-tie"></i> </h1>
+        <div class="current-datetime">
+          <div class="time" id="currentTime"></div>
+          <div id="currentDate"></div>
+        </div>
+      </div>
+      
+      <div class="stats-bar">
+        <div class="stat-item animate__animated animate__fadeInUp">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="workerCount">0</div>
+            <div class="stat-label">Total Workers</div>
+          </div>
+        </div>
+        
+        <div class="stat-item animate__animated animate__fadeInUp animate-delay-1">
+          <div class="stat-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="todayEntries">0</div>
+            <div class="stat-label">Today's Entries</div>
+          </div>
+        </div>
+        
+        <div class="stat-item animate__animated animate__fadeInUp animate-delay-2">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="pendingItems">0</div>
+            <div class="stat-label">Pending Items</div>
+          </div>
+        </div>
+        
+        <div class="stat-item animate__animated animate__fadeInUp animate-delay-3">
+          <div class="stat-icon">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalPayroll">₹0</div>
+            <div class="stat-label">This Month's Payroll</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Cards -->
+    <section>
+      <h2 style="margin-bottom: 1.5rem; color: var(--primary);"><i class="fas fa-tachometer-alt"></i> Quick Actions</h2>
+      <div class="dashboard-grid">
+        <a href="add-worker.html" class="card animate__animated animate__fadeIn">
+          <h2><i class="fas fa-user-plus"></i> Add Workers</h2>
+          <p>Register new employees with complete details including pay structure, bank information, and employment terms.</p>
+          <span class="btn btn-primary">Go to Page</span>
+        </a>
+        
+        <a href="work-entry.html" class="card animate__animated animate__fadeIn animate-delay-1">
+          <h2><i class="fas fa-tasks"></i> Submit Work</h2>
+          <p>Record daily production, shift work, or piece-rate work with flexible input options for different work types.</p>
+          <span class="btn btn-primary">Go to Page</span>
+        </a>
+        
+        <a href="salary-report.html" class="card animate__animated animate__fadeIn animate-delay-2">
+          <h2><i class="fas fa-file-invoice-dollar"></i> Salary Report</h2>
+          <p>Generate comprehensive reports with filters by date range, department, or worker category with export options.</p>
+          <span class="btn btn-primary">Go to Page</span>
+        </a>
+        
+        <a href="manage-entries.html" class="card animate__animated animate__fadeIn animate-delay-3">
+          <h2><i class="fas fa-edit"></i> Manage Entries</h2>
+          <p>Review, edit, or delete work records with advanced search and bulk operation capabilities.</p>
+          <span class="btn btn-primary">Go to Page</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Project Information -->
+    <section class="project-info" id="project-info">
+      <h2><i class="fas fa-info-circle"></i> About This Project</h2>
+      
+      <div class="project-info-content">
+        <div class="project-info-text">
+          <p>The Garment Payroll System is designed to revolutionize how small to medium-sized garment factories manage their workforce compensation. Our system addresses the unique challenges of the garment industry where workers may be paid by the hour, by the piece, or through a combination of both.</p>
+          
+          <p>Key problems we solve:</p>
+          <ul style="margin: 1rem 0 1rem 2rem; color: var(--gray);">
+            <li>Complex pay structures with multiple calculation methods</li>
+            <li>Time-consuming manual payroll calculations</li>
+            <li>Difficulty tracking piece-rate work accurately</li>
+            <li>Lack of transparency in payroll processing</li>
+            <li>Challenges in generating compliance reports</li>
+          </ul>
+          
+          <p>This system was developed after extensive research with garment factory owners to create a solution that truly meets their needs.</p>
+        </div>
+        
+        <div class="project-info-image">
+          <img src="images/Garment_pes.png" alt="Garment factory production">
+        </div>
+      </div>
+      
+      <div class="features-list">
+        <div class="feature-item">
+          <h3><i class="fas fa-calculator"></i> Flexible Pay Calculations</h3>
+          <p>Supports hourly wages, piece-rate payments, overtime, and bonus calculations with customizable rules.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3><i class="fas fa-mobile-alt"></i> Mobile-Friendly</h3>
+          <p>Accessible on any device, allowing supervisors to record work on the factory floor.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3><i class="fas fa-shield-alt"></i> Data Security</h3>
+          <p>Role-based access control ensures sensitive payroll data is protected.</p>
+        </div>
+        
+        <div class="feature-item">
+          <h3><i class="fas fa-file-export"></i> Comprehensive Reporting</h3>
+          <p>Generate reports for management, workers, and compliance requirements with ease.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <h2><i class="fas fa-quote-left"></i> What Our Users Say</h2>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial-card animate__animated animate__fadeIn">
+          <div class="testimonial-content">
+            "This system cut our payroll processing time by 70% and eliminated calculation errors. The workers appreciate the transparency in how their pay is calculated."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Rajesh Kumar">
+            </div>
+            <div class="author-info">
+              <h4>Priya Sharma</h4>
+              <p>Owner, StitchWell Garments</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card animate__animated animate__fadeIn animate-delay-1">
+          <div class="testimonial-content">
+            "The transition from our old manual system was seamless. Now we can focus on production instead of spending days calculating wages each month."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar">
+            </div>
+            <div class="author-info">
+              <h4>Rajesh Kumar</h4>
+              <p>Factory Manager, TrendStitch Apparel</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card animate__animated animate__fadeIn animate-delay-2">
+          <div class="testimonial-content">
+            "As an accountant, I appreciate how the system maintains complete audit trails and generates all the reports we need for compliance and management."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rajesh Kumar">
+            </div>
+            <div class="author-info">
+              <h4>Ananya Patel</h4>
+              <p>Accountant, FashionNova Textiles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <i class="fas fa-tshirt"></i>
+          <span class="footer-logo-text">Garment Payroll</span>
+        </div>
+        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1.5rem;">Streamlining payroll operations for garment manufacturers since 2023.</p>
+        <div style="display: flex; gap: 1rem;">
+          <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add-worker.html">Add Workers</a></li>
+          <li><a href="work-entry.html">Submit Work</a></li>
+          <li><a href="salary-report.html">Salary Reports</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Community Forum</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-envelope"></i> sreedhark@gmail.com</p>
+        <p><i class="fas fa-phone"></i> +91 6369 465 872 </p>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Pushpa, Tiruppur, India</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> Garment Payroll System. All rights reserved. | Version 2.0.0</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" class="back-to-top" title="Back to Top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script>
+    // Current year
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const navLinks = document.getElementById("navLinks");
+    
+    mobileMenuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      mobileMenuBtn.innerHTML = navLinks.classList.contains("active") ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById("backToTop");
+    
+    window.onscroll = () => {
+      backToTopBtn.style.display = window.scrollY > 300 ? "flex" : "none";
+    };
+    
+    backToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+    
+    // Logout buttons
+    const logoutBtn = document.getElementById("logoutBtn");
+    const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
+    
+    const logout = () => {
+      if (confirm("Are you sure you want to logout?")) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    };
+    
+    logoutBtn.addEventListener("click", logout);
+    mobileLogoutBtn.addEventListener("click", logout);
+    
+    // Greeting with time-based message
+    const greetingEl = document.getElementById("greeting");
+    const hour = new Date().getHours();
+    const greetingText = hour < 12 ? "Good Morning ☀️" :
+                         hour < 18 ? "Good Afternoon 🌤️" :
+                         "Good Evening 🌙";
+    greetingEl.textContent += `${greetingText}, Admin!`;
+    
+    // Update date and time
+    function updateDateTime() {
+      const now = new Date();
+      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      
+      document.getElementById("currentTime").textContent = now.toLocaleTimeString('en-US', timeOptions);
+      document.getElementById("currentDate").textContent = now.toLocaleDateString('en-US', dateOptions);
+    }
+    
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+    
+    // Animated counters for stats
+    function animateValue(id, start, end, duration, prefix = "", suffix = "") {
+      const obj = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = prefix + Math.floor(progress * (end - start) + start) + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+    
+    // Simulate loading stats from backend
+    setTimeout(() => {
+      animateValue("workerCount", 0, 124, 1000);
+      animateValue("todayEntries", 0, 28, 1000);
+      animateValue("pendingItems", 0, 5, 1000);
+      animateValue("totalPayroll", 0, 284750, 1000, "₹");
+    }, 800);
+    
+    // Add animation on scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll(".animate__animated");
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (elementPosition < screenPosition) {
+          const animation = element.classList[1];
+          element.classList.add(animation);
+        }
+      });
+    };
+    
+    window.addEventListener("scroll", animateOnScroll);
+    // Initial check in case elements are already visible
+    animateOnScroll();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Garment Payroll System</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
+      background-color: rgba(245, 247, 250, 0.9);
+    }
+
+    .auth-container {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow-hover);
+      overflow: hidden;
+      width: 100%;
+      max-width: 1100px;
+      min-height: 600px;
+      display: flex;
+      transition: all 0.3s ease;
+    }
+
+    .auth-card:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .auth-image {
+      flex: 1;
+      background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      color: white;
+      position: relative;
+    }
+
+    .auth-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+      z-index: 1;
+    }
+
+    .auth-image-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .auth-image h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .auth-image p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .auth-form {
+      flex: 1;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-right: 1rem;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .auth-form h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .auth-form p {
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: var(--light);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      outline: none;
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 1rem;
+      top: 2.6rem;
+      color: var(--gray);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .auth-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: var(--gray);
+    }
+
+    .auth-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .auth-footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: var(--warning);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-control.error {
+      border-color: var(--warning);
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 1rem;
+      top: 2.6rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: color 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .auth-card {
+        flex-direction: column;
+        max-width: 500px;
+      }
+      
+      .auth-image {
+        display: none;
+      }
+      
+      .auth-form {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .auth-container {
+        padding: 1rem;
+      }
+      
+      .auth-form {
+        padding: 1.5rem;
+      }
+      
+      .logo-text {
+        font-size: 1.5rem;
+      }
+      
+      .auth-form h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-form-content {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Demo credentials box */
+    .demo-credentials {
+      background-color: rgba(67, 97, 238, 0.1);
+      border-left: 4px solid var(--primary);
+      padding: 1rem;
+      margin-top: 1.5rem;
+      border-radius: 4px;
+    }
+
+    .demo-credentials h4 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .demo-credentials p {
+      margin: 0.25rem 0;
+      font-size: 0.85rem;
+      color: var(--dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-image">
+        <div class="auth-image-content">
+          <h2>Garment Payroll System</h2>
+          <p>Streamline your garment factory payroll operations with our efficient management system</p>
+        </div>
+      </div>
+      
+      <div class="auth-form">
+        <div class="auth-form-content">
+          <div class="logo">
+            <i class="fas fa-tshirt"></i>
+            <span class="logo-text">GarmentPay</span>
+          </div>
+          
+          <h1>Welcome Back</h1>
+          <p>Sign in to access your payroll dashboard</p>
+          
+          <form id="loginForm" novalidate>
+            <div class="form-group">
+              <label for="username">Email Address</label>
+              <input type="email" id="username" class="form-control" placeholder="Enter your email" required>
+              <i class="fas fa-envelope input-icon"></i>
+              <div id="emailError" class="error-message">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+              
+              <span class="toggle-password" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </span>
+              <div id="passwordError" class="error-message">Password must be at least 6 characters</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="loginBtn">
+              <span id="btnText">Sign In</span>
+              <div class="spinner" id="spinner"></div>
+            </button>
+          </form>
+
+          <div class="demo-credentials">
+            <h4>Demo Credentials:</h4>
+            <p><strong>Email:</strong> sreedhar@gmail.com</p>
+            <p><strong>Password:</strong> kpn1234</p>
+          </div>
+          
+          <div class="auth-footer">
+            <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+            <p><a href="#" id="forgotLink">Forgot password?</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize admin credentials
+    if (!localStorage.getItem("adminUser") || !localStorage.getItem("adminPass")) {
+      localStorage.setItem("adminUser", "sreedhar@gmail.com");
+      localStorage.setItem("adminPass", "kpn1234");
+    }
+
+    // DOM Elements
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const loginBtn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const signupLink = document.getElementById('signupLink');
+    const forgotLink = document.getElementById('forgotLink');
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Email validation
+      if (!usernameInput.value.trim()) {
+        emailError.textContent = 'Email is required';
+        emailError.style.display = 'block';
+        usernameInput.classList.add('error');
+        isValid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameInput.value.trim())) {
+        emailError.textContent = 'Please enter a valid email';
+        emailError.style.display = 'block';
+        usernameInput.classList.add('error');
+        isValid = false;
+      } else {
+        emailError.style.display = 'none';
+        usernameInput.classList.remove('error');
+      }
+      
+      // Password validation
+      if (!passwordInput.value) {
+        passwordError.textContent = 'Password is required';
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('error');
+        isValid = false;
+      } else if (passwordInput.value.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters';
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('error');
+        isValid = false;
+      } else {
+        passwordError.style.display = 'none';
+        passwordInput.classList.remove('error');
+      }
+      
+      return isValid;
+    }
+
+    // Input event listeners for real-time validation
+    usernameInput.addEventListener('input', function() {
+      if (this.value.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim())) {
+        emailError.style.display = 'none';
+        this.classList.remove('error');
+      }
+    });
+
+    passwordInput.addEventListener('input', function() {
+      if (this.value && this.value.length >= 6) {
+        passwordError.style.display = 'none';
+        this.classList.remove('error');
+      }
+    });
+
+    // Form submission
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) return;
+      
+      // Show loading state
+      btnText.textContent = 'Authenticating...';
+      spinner.style.display = 'block';
+      loginBtn.disabled = true;
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        const user = usernameInput.value.trim();
+        const pass = passwordInput.value;
+        
+        const storedUser = localStorage.getItem('adminUser');
+        const storedPass = localStorage.getItem('adminPass');
+        
+        if (!storedUser || !storedPass) {
+          showError('Admin credentials not found. Please contact support.');
+          return;
+        }
+        
+        if (user === storedUser && pass === storedPass) {
+          // Successful login
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.href = 'home.html';
+        } else {
+          showError('Invalid email or password.');
+        }
+      }, 1500);
+    });
+
+    function showError(message) {
+      // Reset button state
+      btnText.textContent = 'Sign In';
+      spinner.style.display = 'none';
+      loginBtn.disabled = false;
+      
+      // Show error message
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.style.display = 'block';
+      errorDiv.style.textAlign = 'center';
+      errorDiv.style.marginTop = '1rem';
+      errorDiv.textContent = message;
+      
+      // Remove previous error if exists
+      const existingError = document.querySelector('.form-error');
+      if (existingError) existingError.remove();
+      
+      errorDiv.classList.add('form-error');
+      loginForm.appendChild(errorDiv);
+    }
+
+    // Signup and Forgot Password links
+    signupLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Sign up functionality will be implemented soon!');
+    });
+
+    forgotLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Password reset functionality will be implemented soon!');
+    });
+
+    // Auto-fill demo credentials for testing
+    window.addEventListener('load', function() {
+      // Uncomment the next two lines to auto-fill credentials for demo purposes
+      // usernameInput.value = 'sreedhar@gmail.com';
+      // passwordInput.value = 'kpn1234';
+    });
+  </script>
+</body>
+</html>

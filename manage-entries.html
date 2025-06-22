@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Work Entries</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f7fa;
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+    }
+    
+    .nav-title {
+      color: white;
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-title i {
+      font-size: 1.8rem;
+    }
+    
+    .nav-title-link {
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-links a:hover {
+      color: white;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .btn-logout {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-logout:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: white;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Table Styles */
+    .table-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:hover {
+      background-color: rgba(72, 149, 239, 0.05);
+    }
+    
+    .no-data {
+      text-align: center;
+      color: var(--gray);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-edit {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .btn-delete {
+      background-color: var(--warning);
+      color: white;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .filter-controls select,
+    .filter-controls input {
+      padding: 0.5rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 4px;
+      min-width: 200px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0 2rem;
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-logo i {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    
+    .footer-logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .footer-links h3 {
+      color: white;
+      margin-bottom: 1.2rem;
+      font-size: 1.2rem;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.6rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .footer-contact p {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px) scale(1.1);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--primary);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        gap: 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      
+      .nav-links.active {
+        max-height: 500px;
+        padding: 1rem 0;
+      }
+      
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .nav-links a {
+        padding: 1rem;
+        justify-content: center;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .filter-controls {
+        flex-direction: column;
+      }
+      
+      .filter-controls select,
+      .filter-controls input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+      <a href="home.html" class="nav-title-link">
+        <h1 class="nav-title"><i class="fas fa-tshirt"></i> Garment Payroll System</h1>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="add-worker.html"><i class="fas fa-user-plus"></i> Add Workers</a></li>
+        <li><a href="work-entry.html"><i class="fas fa-tasks"></i> Submit Work</a></li>
+        <li><a href="manage-entries.html" aria-current="page"><i class="fas fa-edit"></i> Manage Entries</a></li>
+        <li><a href="salary-report.html"><i class="fas fa-file-invoice-dollar"></i> Salary Report</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>Manage Work Entries</h1>
+    
+   
+    
+    <div class="table-container">
+      <table id="entryTable" aria-label="Work entries table">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Worker</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="entryTableBody">
+          <tr class="no-data">
+            <td colspan="6">No work entries available. Add entries through the Submit Work page.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <i class="fas fa-tshirt"></i>
+          <span class="footer-logo-text">Garment Payroll</span>
+        </div>
+        <p>Streamlining payroll operations for garment manufacturers since 2023.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="home.html">Dashboard</a></li>
+          <li><a href="add-worker.html">Add Workers</a></li>
+          <li><a href="work-entry.html">Submit Work</a></li>
+          <li><a href="salary-report.html">Salary Reports</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Community Forum</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-envelope"></i> sreedhark@gmail.com</p>
+        <p><i class="fas fa-phone"></i> +91 6369 465 872 </p>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Pushpa, Tiruppur, India</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> Garment Payroll System. All rights reserved. | Version 2.0.0</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" class="back-to-top" title="Back to Top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Scripts -->
+  <script>
+    // Current year
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const navLinks = document.getElementById("navLinks");
+    
+    mobileMenuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      mobileMenuBtn.innerHTML = navLinks.classList.contains("active") ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById("backToTop");
+    
+    window.onscroll = () => {
+      backToTopBtn.style.display = window.scrollY > 300 ? "flex" : "none";
+    };
+    
+    backToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Filter functionality
+    document.getElementById("resetFilters").addEventListener("click", () => {
+      document.getElementById("workerFilter").value = "";
+      document.getElementById("dateFilter").value = "";
+      // Add code to reset table view
+    });
+  </script>
+  <script src="js/storage.js"></script>
+  <script src="js/manageEntries.js"></script>
+</body>
+</html>

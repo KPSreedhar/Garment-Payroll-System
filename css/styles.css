@@ -1,0 +1,484 @@
+/* ========================
+   Base & Reset Styles
+======================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ========================
+   Container
+======================== */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================
+   Headings
+======================== */
+h1 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+}
+
+/* ========================
+   Table Styling
+======================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+thead {
+  background-color: #0052cc;
+  color: #fff;
+}
+
+thead th {
+  padding: 12px 15px;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f0f4ff;
+}
+
+tbody tr:hover {
+  background-color: #dbe4ff;
+  transition: background-color 0.3s ease;
+}
+
+tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+/* ========================
+   Form Inputs
+======================== */
+input[type="date"],
+input[type="number"],
+input[type="text"],
+input[type="password"],
+select {
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+  margin-top: 5px;
+}
+
+input:focus {
+  border-color: #0052cc;
+  outline: none;
+}
+
+/* ========================
+   Buttons
+======================== */
+button {
+  background-color: #0052cc;
+  border: none;
+  color: white;
+  padding: 7px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #003d99;
+}
+
+button:focus {
+  outline: 2px solid #003d99;
+  outline-offset: 2px;
+}
+
+button[style*="color:red;"] {
+  background-color: #cc0000;
+}
+
+button[style*="color:red;"]:hover {
+  background-color: #990000;
+}
+
+/* ========================
+   Responsive Tables
+======================== */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+  }
+
+  tbody td {
+    padding: 10px 15px;
+    text-align: right;
+    position: relative;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 50%;
+    font-weight: 700;
+    text-align: left;
+    color: #444;
+  }
+
+  tbody td:last-child {
+    text-align: center;
+  }
+}
+
+/* ========================
+   Navbar
+======================== */
+.navbar {
+  background-color: #0052cc;
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-title {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-left: -100px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin-left: 400px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #003d99;
+}
+
+/* ========================
+   Dashboard Cards
+======================== */
+.dashboard {
+  text-align: center;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.dashboard-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #e0f2f1;
+  border: 1px solid #b2dfdb;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #003d99;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: #b2dfdb;
+  transform: translateY(-5px);
+}
+
+/* ========================
+   Footer
+======================== */
+.footer {
+  background-color: #003d99;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+  color: #80deea;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ========================
+   Back to Top Button
+======================== */
+#backToTop {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  display: none;
+  background-color: #003d99;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  transition: background-color 0.3s ease;
+}
+
+#backToTop:hover {
+  background-color: #0052cc;
+}
+
+/* ========================
+   Greeting & Logout
+======================== */
+.greeting {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #003d99;
+  margin-top: 1rem;
+  text-align: center;
+  padding-right: 1rem;
+}
+
+.btn-logout {
+  margin-right: -100px;
+  padding: 0.5rem 1rem;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ========================
+   Info / Error / Success
+======================== */
+.info,
+.error,
+.success {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.error {
+  color: #d32f2f;
+}
+
+.success {
+  color: #388e3c;
+}
+
+/* ========================
+   Auth Pages: Login & Reset
+======================== */
+body.auth-body {
+  background: linear-gradient(to right, #f9f9f9, #e8f0fe);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container.login-box {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.container.login-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.container.login-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container.login-box label {
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.container.login-box button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #0077ff;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.container.login-box button:hover {
+  background-color: #005fd1;
+}
+
+.container.login-box .info-note {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.container.login-box a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #0077ff;
+  text-decoration: none;
+}
+
+.container.login-box a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .container.login-box {
+    padding: 20px;
+  }
+
+  .container.login-box h2 {
+    font-size: 22px;
+  }
+}
+
+.problem-solution {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.problem-solution h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.problem-solution h3 {
+  color: #34495e;
+  margin-top: 1.5rem;
+}
+
+.problem-solution ul {
+  list-style-type: '✔️ ';
+  margin-left: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.problem-solution li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.problem-solution p {
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+    .closing-summary {
+      background-color: #e9ecef;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+
+    .cta-text {
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+#workerTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#workerTable th {
+  background-color: #0052cc;
+  color: white;
+}
+
+#workerTable th, #workerTable td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
